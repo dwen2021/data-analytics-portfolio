@@ -1,0 +1,14 @@
+# Data & models
+data/raw/*
+models/*
+!data/raw/.gitkeep
+!models/.gitkeep
+
+# IDE
+.vscode/
+__pycache__/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db

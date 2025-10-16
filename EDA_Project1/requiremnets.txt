@@ -1,0 +1,16 @@
+# Core Python libraries
+numpy
+pandas
+
+# Machine Learning
+scikit-learn
+
+# Visualization
+matplotlib
+seaborn
+
+# Model saving/loading
+joblib
+
+# Notebook environment
+jupyter

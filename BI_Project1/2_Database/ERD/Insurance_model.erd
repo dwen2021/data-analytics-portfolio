@@ -1,0 +1,100 @@
+erdiagram InsuranceBI
+notation=crowsfoot
+
+// ========== Dimension Tables ==========
+
+entity Dim_Customer {
+  customer_id : INT key
+  customer_age : INT
+  age_group : VARCHAR(20)
+}
+
+entity Dim_Region {
+  region_id : INT key
+  region_code : VARCHAR(10) unique
+  region_density : INT
+  region_tier : VARCHAR(10)
+}
+
+entity Dim_FuelType {
+  fuel_type_id : INT key
+  fuel_type_name : VARCHAR(20)
+  fuel_category : VARCHAR(20)
+}
+
+entity Dim_Time {
+  time_id : INT key
+  full_date : DATE unique
+  year : INT
+  quarter : INT
+  month : INT
+  week : INT
+  day : INT
+}
+
+entity Dim_Vehicle {
+  vehicle_id : INT key
+  vehicle_age : FLOAT
+  segment : VARCHAR(10)
+  model : VARCHAR(10)
+  fuel_type_id : INT
+  engine_type : VARCHAR(50)
+  max_torque : VARCHAR(50)
+  max_power : VARCHAR(50)
+  displacement : INT
+  cylinder : INT
+  transmission_type : VARCHAR(20)
+  steering_type : VARCHAR(20)
+  turning_radius : FLOAT
+  length : INT
+  width : INT
+  gross_weight : INT
+  airbags : INT
+  is_esc : BOOLEAN
+  is_parking_camera : BOOLEAN
+  is_brake_assist : BOOLEAN
+  ncap_rating : INT
+}
+
+// ========== Fact Table ==========
+
+entity Fact_Policy {
+  policy_id : VARCHAR(20) key
+  subscription_length : FLOAT
+  claim_status : INT
+  start_date : DATE
+  end_date : DATE
+  customer_id : INT
+  vehicle_id : INT
+  region_id : INT
+  start_time_id : INT
+  end_time_id : INT
+}
+
+// ========== Relationships ==========
+
+// Fact_Policy connects to all dimension tables
+relationship Purchase {
+  Dim_Customer[1] -> Fact_Policy[N]
+}
+
+relationship Insure {
+  Dim_Vehicle[1] -> Fact_Policy[N]
+}
+
+relationship Locate {
+  Dim_Region[1] -> Fact_Policy[N]
+}
+
+relationship Policy_Start {
+  Dim_Time[1] -> Fact_Policy[N]
+}
+
+relationship Policy_End {
+  Dim_Time[1] -> Fact_Policy[N]
+}
+
+// Vehicle connects to FuelType
+relationship Vehicle_FuelType {
+  Dim_FuelType[1] -> Dim_Vehicle[N]
+}
